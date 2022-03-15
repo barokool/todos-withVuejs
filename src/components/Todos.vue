@@ -1,6 +1,11 @@
 <template>
 <div>
-  <TodoItem v-for="todo in todos" todo="todo" v-bind:key="todo.id" v-bind:TodoItem="todo" @item-completed="markCompleted"/>
+        <TodoItem 
+        v-for="todo in todos" 
+        :key="todo.id" 
+        :TodoItem="todo" 
+        @item-completed="markCompleted" 
+        @item-deleted="deleteTodo"/>
 </div>
 </template>
 
@@ -36,10 +41,15 @@ export default {
             })
         }
         
+        const deleteTodo = id => { 
+            todos.value = todos.value.filter(todo => {
+               return todo.id !== id })
+        }
 
         return {
             todos,
-            markCompleted
+            markCompleted,
+            deleteTodo
         }
     }
 }
