@@ -1,20 +1,23 @@
 <template>
 <div>
+        <AddTodo @add-item="addTodo"/>
         <TodoItem 
         v-for="todo in todos" 
         :key="todo.id" 
         :TodoItem="todo" 
         @item-completed="markCompleted" 
         @item-deleted="deleteTodo"/>
+        
 </div>
 </template>
 
 <script>
 import {ref} from 'vue'
 import TodoItem from './TodoItem.vue'
+import AddTodo from './AddTodo.vue'
 export default {
     name : "Todos",
-    components : {TodoItem},
+    components : {TodoItem,AddTodo},
     setup() { 
         const todos = ref([
             {
@@ -46,10 +49,17 @@ export default {
                return todo.id !== id })
         }
 
+        const addTodo = item => { 
+            todos.value.push(item)
+
+            return todos
+        }
+
         return {
             todos,
             markCompleted,
-            deleteTodo
+            deleteTodo,
+            addTodo
         }
     }
 }
